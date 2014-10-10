@@ -7,7 +7,7 @@ class Main {
         try {
             N = Integer.parseInt(args[0]);
         } catch (Throwable throwable) {
-            N = 5;// 17 12 30 --- 17 19 30 ??
+            N = 5;
         }
 
         long time = -System.currentTimeMillis();
