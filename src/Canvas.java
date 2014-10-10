@@ -8,9 +8,6 @@ class Canvas {
     private final int pxBetweenNum;
     private final int pxBetweenMat;
 
-    private final int frameWidth;
-    private final int frameHeight;
-
     private int maxWidth = 0, maxHeight = 0;
 
     static void draw(List<List<Integer>> layers, byte[][][] position) {
@@ -26,8 +23,8 @@ class Canvas {
         pxBetweenNum = 15;
         pxBetweenMat = 100 + Main.N * pxBetweenNum;
 
-        frameWidth = (graphDepth + 3) * pxBetweenMat;
-        frameHeight = (graphWidth + 3) * pxBetweenMat;
+        int frameWidth = (graphDepth + 3) * pxBetweenMat;
+        int frameHeight = (graphWidth + 3) * pxBetweenMat;
 
         JFrame jFrame = new JFrame("title");
         jFrame.setPreferredSize(new Dimension(800, 600));
@@ -48,12 +45,6 @@ class Canvas {
         jFrame.pack();
         jFrame.setVisible(true);
         jFrame.repaint();
-
-        //Shape shape = Temp.createArrowShape(new Point(100, 100), new Point(300, 400));
-        //Graphics g = jFrame.getGraphics();
-        //Graphics2D g2 = (Graphics2D) g;
-        //g2.draw(shape);
-        //jFrame.repaint();
     }
 
     private void drawMatrices(List<List<Integer>> layers, byte[][][] position) {

@@ -35,7 +35,6 @@ class ListPositionByN {
                 continue;
             arr[pos] = j;
             rec(1 + pos);
-            //arr[arrPos] = -1;
         }
     }
 }

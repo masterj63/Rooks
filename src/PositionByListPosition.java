@@ -17,7 +17,7 @@ class PositionByListPosition {
             for (int d = 0; d < Main.N - 1; d++) {
                 final int j1 = Main.N - d - 1, j2 = d;
 
-                for (int j = j1; d < j; j--) {//j j2
+                for (int j = j1; d < j; j--) {
                     boolean bOk = 1 + j < Main.N;
                     boolean lOk = 0 < j2;
 
@@ -30,7 +30,7 @@ class PositionByListPosition {
                         t[j][j2]++;
                 }
 
-                for (int j = j2; j < j1; j++) {//j1 j
+                for (int j = j2; j < j1; j++) {
                     boolean bOk = 1 + j1 < Main.N;
                     boolean lOk = 0 < j;
 

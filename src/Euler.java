@@ -17,7 +17,7 @@ class Euler {
     }
 
     private void run() {
-        int ne = 0;
+        int nonEulerity = 0;
 
         for (int i0 = 0; i0 < layers.size(); i0++)
             for (int j0 = 1 + i0; j0 < layers.size(); j0++)
@@ -31,34 +31,12 @@ class Euler {
 
                         dfs(layers.get(i0).get(i1), i0);
                         if (rho[0] != rho[1]) {
-                            ne++;
-//                            System.out.printf("%03d: %d %d (btwn [%d, %d] and [%d, %d])\n",
-//                                    ++checkInd, rho[1], rho[0],
-//                                    i0, i1, j0, j1);
+                            nonEulerity++;
                         }
                     }
 
-        System.out.println(ne);
+        System.out.println(nonEulerity);
     }
-
-//    private void run() {
-//        for (int i0 = 0; i0 < layers.size(); i0++)
-//            for (int j0 = 1 + i0; j0 < layers.size(); j0++)
-//                for (int i1 : layers.get(i0))
-//                    for (int j1 : layers.get(j0)) {
-//                        rho[0] = 0;
-//                        rho[1] = 0;
-//                        destInd = j1;
-//                        destLay = j0;
-//                        Arrays.fill(used, 0);
-//
-//                        dfs(i1, i0);
-//                        if(rho[0] != rho[1])
-//                            System.err.printf("%03d: %d %d (btwn [%d, %d] and [%d, %d])\n",
-//                                    ++checkInd, rho[1], rho[0],
-//                                    i0, i1, j0, j1);
-//                    }
-//    }
 
     private boolean dfs(int posInd, int posLay) {
         if (used[posInd] == +1)
