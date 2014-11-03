@@ -112,6 +112,11 @@ class Canvas {
         int ex = permEx(perm);
         int el = permL(perm);
         String s = String.format("ex=%d,el=%d,rho=%.1f", ex, el, (ex + el) / 2.0);
+        if((ex + el) % 2 != 0){
+            String report = String.format("odd (ex+el) found!!!\n");
+            Main.toReport.append(report);
+        }
+
         JLabel jLabel = new JLabel(s);
         jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
         maxWidth = Math.max(maxWidth, x + W);
