@@ -101,7 +101,7 @@ class Canvas {
 
             for (int j = 0; j < n; j++) {
                 if (board[i] == j)
-                    rowString.append('\u2A02');//rook here
+                    rowString.append('\u274D');//rook here
                 else if (i <= j)
                     rowString.append('\u2613');//dark cell here
                 else
