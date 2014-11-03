@@ -2,11 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 class Canvas {
     private final JPanel jPanel;
@@ -77,18 +74,18 @@ class Canvas {
                 initializeBoardJLabel(boards.get(i), indCoordMap.get(i));
     }
 
-    private void initializeBoardJLabel(byte[] board, Point point){
+    private void initializeBoardJLabel(byte[] board, Point point) {
         int n = board.length;
         int x = point.x, y = point.y;
 
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             StringBuilder rowString = new StringBuilder();
             rowString.append("<html><p style=\"font-family: Courier New, monospace\">");
 
-            for(int j = 0; j < n; j++){
-                if(board[i] == j)
+            for (int j = 0; j < n; j++) {
+                if (board[i] == j)
                     rowString.append('\u2A02');//rook here
-                else if(i <= j)
+                else if (i <= j)
                     rowString.append('\u2613');//dark cell here
                 else
                     rowString.append('\u2610');//light cell here
@@ -108,20 +105,55 @@ class Canvas {
             boardsJLabelList.add(jLabel);
         }
 
-        int[] perm = boardToPerm(board);
-        int ex = permEx(perm);
-        int el = permL(perm);
-        String s = String.format("ex=%d,el=%d,rho=%.1f", ex, el, (ex + el) / 2.0);
-        if((ex + el) % 2 != 0){
-            String report = String.format("odd (ex+el) found!!!\n");
-            Main.toReport.append(report);
+        {
+            int[] perm = boardToPerm(board);
+            int ex = permEx(perm);
+            int el = permL(perm);
+            String footnote = String.format("ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            if ((ex + el) % 2 != 0) {
+                String report = String.format("odd (ex+el) found!!\n");
+                Main.toReport.append(report);
+            }
+
+            JLabel jLabel = new JLabel(footnote);
+            jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
+            maxWidth = Math.max(maxWidth, x + W);
+            maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
+            boardsJLabelList.add(jLabel);
         }
 
-        JLabel jLabel = new JLabel(s);
-        jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
-        maxWidth = Math.max(maxWidth, x + W);
-        maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
-        boardsJLabelList.add(jLabel);
+        {
+            byte[] kerov = kerovification(board);
+            int[] perm = boardToPerm(kerov);
+            int ex = permEx(perm);
+            int el = permL(perm);
+            String footnote = String.format("ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            if ((ex + el) % 2 != 0) {
+                String report = String.format("odd (ex+el) found!!\n");
+                Main.toReport.append(report);
+            }
+
+            n++;
+            JLabel jLabel = new JLabel(footnote);
+            jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
+            maxWidth = Math.max(maxWidth, x + W);
+            maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
+            boardsJLabelList.add(jLabel);
+            n--;
+        }
+    }
+
+    private static byte[] kerovification(byte[] board){
+        int n = board.length;
+        byte[] kerov = new byte[2 * n - 2];
+        Arrays.fill(kerov, (byte) -1);
+
+        for(int i = 0; i < n; i++){
+            if(board[i] == -1)
+                continue;
+            kerov[2 * i - 1] = (byte) (2 * board[i]);
+        }
+        return kerov;
     }
 
     private static int[] boardToPerm(byte[] board){

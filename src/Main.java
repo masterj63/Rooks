@@ -12,7 +12,7 @@ class Main {
         try {
             N = Integer.parseInt(args[0]);
         } catch (Throwable throwable) {
-            N = 8;
+            N = 6;
         }
 
         int boardsListSize = -1;
@@ -51,7 +51,7 @@ class Main {
             System.out.println("6/5. eulerity checked.");
         }catch (Throwable error){
             error.printStackTrace(System.out);
-            System.out.println(">>>>>>Report may be corrupted!");
+            System.out.println(">>>>>>Report may be corrupted!!");
         }
 
         time += System.currentTimeMillis();
