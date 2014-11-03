@@ -55,28 +55,6 @@ class Canvas {
         jFrame.pack();
         jFrame.setVisible(true);
         jFrame.repaint();
-
-        drawTest();
-        //jFrame.repaint();
-    }
-
-    private void drawTest(){
-        //for(JLabel jLabel : matricesJLabelList)
-//        for(JLabel jLabel : boardsJLabelList)
-//            jPanel.add(jLabel);
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("unpaused");
-//        for(JLabel jLabel : boardsJLabelList)
-//            jPanel.remove(jLabel);
-
-//        for(JLabel jLabel : matricesJLabelList)
-//            jPanel.add(jLabel);
-        for(JLabel jLabel : boardsJLabelList)
-            jPanel.add(jLabel);
     }
 
     private void computeCoordinates(List<List<Integer>> layers) {
@@ -92,15 +70,6 @@ class Canvas {
             }
             x++;
         }
-    }
-
-    private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers){
-        assert matricesJLabelList.isEmpty();
-        assert !indCoordMap.isEmpty();
-
-        for(List<Integer> list : layers)
-            for(int i : list)
-                initializeMatrixJLabel(matrices[i], indCoordMap.get(i));
     }
 
     private void initializeBoardsJLabelList(List<byte[]> boards, List<List<Integer>> layers){
@@ -142,6 +111,15 @@ class Canvas {
 
             boardsJLabelList.add(jLabel);
         }
+    }
+
+    private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers){
+        assert matricesJLabelList.isEmpty();
+        assert !indCoordMap.isEmpty();
+
+        for(List<Integer> list : layers)
+            for(int i : list)
+                initializeMatrixJLabel(matrices[i], indCoordMap.get(i));
     }
 
     private void initializeMatrixJLabel(byte[][] mat, Point point) {
