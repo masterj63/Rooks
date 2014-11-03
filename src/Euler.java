@@ -16,7 +16,7 @@ class Euler {
         this.used = new int[sort.length];
     }
 
-    private void run() {
+    private int run() {
         int nonEulerity = 0;
 
         for (int i0 = 0; i0 < layers.size(); i0++)
@@ -35,7 +35,7 @@ class Euler {
                         }
                     }
 
-        System.out.println(nonEulerity);
+        return nonEulerity;
     }
 
     private boolean dfs(int posInd, int posLay) {
@@ -69,7 +69,7 @@ class Euler {
         }
     }
 
-    static void get(List<List<Integer>> layers, List<Integer>[] sort) {
-        new Euler(layers, sort).run();
+    static int get(List<List<Integer>> layers, List<Integer>[] sort) {
+        return new Euler(layers, sort).run();
     }
 }
