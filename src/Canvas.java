@@ -132,7 +132,9 @@ class Canvas {
                     rowString.append("<font color='#D8D8D8'>0");
                 else
                     rowString.append(mat[i][j]);
-                rowString.append(' ');
+                rowString.append("&nbsp;");
+                rowString.append("&nbsp;");
+                rowString.append("&nbsp;");
             }
             rowString.append("</font></html>");
             JLabel jLabel = new JLabel(rowString.toString());
