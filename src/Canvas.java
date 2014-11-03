@@ -12,7 +12,7 @@ class Canvas {
     private final int pxBetweenMat;
 
     private int maxWidth = 0, maxHeight = 0;
-    private final static int W = 150, H = 60;//max dim of label; note this if something goes wrong
+    private final static int W = 180, H = 60;//max dim of label; note this if something goes wrong
 
     private Map<Integer, Point> indCoordMap = new HashMap<>();
     private List<JLabel> matricesJLabelList = new ArrayList<>();
@@ -109,7 +109,7 @@ class Canvas {
             int[] perm = boardToPerm(board);
             int ex = permEx(perm);
             int el = permL(perm);
-            String footnote = String.format("ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            String footnote = String.format("ord:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
             if ((ex + el) % 2 != 0) {
                 String report = String.format("odd (ex+el) found!!\n");
                 Main.toReport.append(report);
@@ -127,7 +127,7 @@ class Canvas {
             int[] perm = boardToPerm(kerov);
             int ex = permEx(perm);
             int el = permL(perm);
-            String footnote = String.format("ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            String footnote = String.format("ker:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
             if ((ex + el) % 2 != 0) {
                 String report = String.format("odd (ex+el) found!!\n");
                 Main.toReport.append(report);
