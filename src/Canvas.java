@@ -15,7 +15,7 @@ class Canvas {
     private final int pxBetweenMat;
 
     private int maxWidth = 0, maxHeight = 0;
-    private final static int W = 100, H = 60;//max dim of label; note this if something goes wrong
+    private final static int W = 150, H = 60;//max dim of label; note this if something goes wrong
 
     private Map<Integer, Point> indCoordMap = new HashMap<>();
     private List<JLabel> matricesJLabelList = new ArrayList<>();
@@ -107,6 +107,52 @@ class Canvas {
 
             boardsJLabelList.add(jLabel);
         }
+
+        int[] perm = boardToPerm(board);
+        int ex = permEx(perm);
+        int el = permL(perm);
+        String s = String.format("ex=%d,el=%d,rho=%.1f", ex, el, (ex + el) / 2.0);
+        JLabel jLabel = new JLabel(s);
+        jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
+        maxWidth = Math.max(maxWidth, x + W);
+        maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
+        boardsJLabelList.add(jLabel);
+    }
+
+    private static int[] boardToPerm(byte[] board){
+        int n = board.length;
+        int[] perm = new int[n];
+
+        for(int i = 0; i < n; i++){
+            int t = i;
+            for(int j = n - 1; j > 0; j--)
+                if(board[j] == -1)
+                    continue;
+                else if(t == j)
+                    t = board[j];
+                else if(t == board[j])
+                    t = j;
+            perm[i] = t;
+        }
+
+        return perm;
+    }
+
+    private static int permEx(int[] perm){
+        int res = 0;
+        for(int i = 0; i < perm.length; i++)
+            if(i < perm[i])
+                res++;
+        return res;
+    }
+
+    private static int permL(int[] perm){
+        int res = 0;
+        for(int i = 0; i < perm.length; i++)
+            for(int j = 1 + i; j < perm.length; j++)
+                if(perm[i] > perm[j])
+                    res++;
+        return res;
     }
 
     private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers){
