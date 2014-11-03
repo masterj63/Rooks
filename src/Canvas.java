@@ -69,12 +69,12 @@ class Canvas {
         assert boardsJLabelList.isEmpty();
         assert !indCoordMap.isEmpty();
 
-        for(List<Integer> list : layers)
-            for(int i : list)
-                initializeBoardJLabel(boards.get(i), indCoordMap.get(i));
+        for (int i = 0; i < layers.size(); i++)
+            for (int j : layers.get(i))
+                initializeBoardJLabel(boards.get(j), indCoordMap.get(j), i);
     }
 
-    private void initializeBoardJLabel(byte[] board, Point point) {
+    private void initializeBoardJLabel(byte[] board, Point point, int layerIndex) {
         int n = board.length;
         int x = point.x, y = point.y;
 
@@ -127,19 +127,36 @@ class Canvas {
             int[] perm = RankUtils.boardToPerm(kerov);
             int ex = RankUtils.permEx(perm);
             int el = RankUtils.permL(perm);
-            String footnote = String.format("ker:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            String footnote;
+            if((ex + el) / 2 == layerIndex)
+                footnote = String.format("ker:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
+            else {
+                footnote = String.format("<html><font color=red>ker:ex=%d,el=%d,rho=%d</font></html>", ex, el, (ex + el) / 2);
+                Main.toReport.append(String.format("Hypothesis fell in layer#%d\n", layerIndex));
+            }
             if ((ex + el) % 2 != 0) {
                 String report = String.format("odd (ex+el) found!!\n");
                 Main.toReport.append(report);
             }
 
-            n++;
+            n+=1;
             JLabel jLabel = new JLabel(footnote);
             jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
             maxWidth = Math.max(maxWidth, x + W);
             maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
             boardsJLabelList.add(jLabel);
-            n--;
+            n-=1;
+        }
+
+        {
+            n+=2;
+            String footnote = String.format("act:rho=%d", layerIndex);
+            JLabel jLabel = new JLabel(footnote);
+            jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
+            maxWidth = Math.max(maxWidth, x + W);
+            maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
+            boardsJLabelList.add(jLabel);
+            n-=2;
         }
     }
 
