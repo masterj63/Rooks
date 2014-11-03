@@ -26,16 +26,8 @@ class Canvas {
     }
 
     private Canvas(List<List<Integer>> layers, List<byte[]> boards, byte[][][] matrices) {
-        int graphDepth = layers.size();
-        int graphWidth = 0;
-        for (List<Integer> lay : layers)
-            graphWidth = Math.max(lay.size(), graphWidth);
-
         pxBetweenNum = 15;
         pxBetweenMat = 100 + Main.N * pxBetweenNum;
-
-        int frameWidth = (graphDepth + 3) * pxBetweenMat;
-        int frameHeight = (graphWidth + 3) * pxBetweenMat;
 
         JFrame jFrame = new JFrame("title");
         jFrame.setPreferredSize(new Dimension(800, 600));
@@ -188,7 +180,6 @@ class Canvas {
             super.mouseClicked(e);
             if(e.getClickCount() == 2) {
                 repaint();
-                System.err.println(state);
                 jPanel.repaint();
             }
         }
