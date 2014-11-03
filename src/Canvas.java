@@ -56,13 +56,27 @@ class Canvas {
         jFrame.setVisible(true);
         jFrame.repaint();
 
-        drawTest(jFrame);
-        jFrame.repaint();
+        drawTest();
+        //jFrame.repaint();
     }
 
-    private void drawTest(JFrame jFrame){
-        for(JLabel jLabel : matricesJLabelList)
-            jFrame.add(jLabel);
+    private void drawTest(){
+        //for(JLabel jLabel : matricesJLabelList)
+//        for(JLabel jLabel : boardsJLabelList)
+//            jPanel.add(jLabel);
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("unpaused");
+//        for(JLabel jLabel : boardsJLabelList)
+//            jPanel.remove(jLabel);
+
+//        for(JLabel jLabel : matricesJLabelList)
+//            jPanel.add(jLabel);
+        for(JLabel jLabel : boardsJLabelList)
+            jPanel.add(jLabel);
     }
 
     private void computeCoordinates(List<List<Integer>> layers) {
@@ -104,17 +118,19 @@ class Canvas {
 
         for(int i = 0; i < n; i++) {
             StringBuilder rowString = new StringBuilder();
-            rowString.append("<html>");
+            rowString.append("<html><p style=\"font-family: Courier New, monospace\">");
 
             for(int j = 0; j < n; j++){
                 if(board[i] == j)
-                    rowString.append('*');
+                    rowString.append('\u2A02');//rook here
+                else if(i <= j)
+                    rowString.append('\u2613');//dark cell here
                 else
-                    rowString.append('-');
+                    rowString.append('\u2610');//light cell here
                 rowString.append(' ');
             }
 
-            rowString.append("</html>");
+            rowString.append("</p></html>");
             JLabel jLabel = new JLabel(rowString.toString());
 
             int tx = x;
