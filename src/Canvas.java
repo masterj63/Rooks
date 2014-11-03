@@ -29,7 +29,7 @@ class Canvas {
         pxBetweenNum = 15;
         pxBetweenMat = 100 + Main.N * pxBetweenNum;
 
-        JFrame jFrame = new JFrame("title");
+        JFrame jFrame = new JFrame("double click me");
         jFrame.setPreferredSize(new Dimension(800, 600));
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
