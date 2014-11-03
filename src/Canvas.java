@@ -14,7 +14,8 @@ class Canvas {
     private int maxWidth = 0, maxHeight = 0;
 
     private Map<Integer, Point> indCoordMap = new HashMap<>();
-    private List<JLabel> matrixJLabelList = new ArrayList<>();
+    private List<JLabel> matricesJLabelList = new ArrayList<>();
+    private List<JLabel> boardsJLabelList = new ArrayList<>();
 
     static void draw(List<List<Integer>> layers, byte[][][] matrices) {
         new Canvas(layers, matrices);
@@ -46,7 +47,7 @@ class Canvas {
 
         //drawMatrices(layers, matrices);
         computeCoordinates(layers);
-        initializeMatrixJLabelList(matrices, layers);
+        initializeMatricesJLabelList(matrices, layers);
 
         jPanel.setPreferredSize(new Dimension(maxWidth, maxHeight));
 
@@ -70,16 +71,16 @@ class Canvas {
         }
     }
 
-    private void initializeMatrixJLabelList(byte[][][] matrices, List<List<Integer>> layers){
-        assert matrixJLabelList.isEmpty();
+    private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers){
+        assert matricesJLabelList.isEmpty();
         assert !indCoordMap.isEmpty();
 
         for(List<Integer> list : layers)
             for(int i : list)
-                initializeMatrixJLabelList0(matrices[i], indCoordMap.get(i));
+                initializeMatrixJLabel(matrices[i], indCoordMap.get(i));
     }
 
-    private void initializeMatrixJLabelList0(byte[][] mat, Point point) {
+    private void initializeMatrixJLabel(byte[][] mat, Point point) {
         int n = mat.length;
         int x = point.x, y = point.y;
 
@@ -106,7 +107,7 @@ class Canvas {
             maxWidth = Math.max(maxWidth, tx + W);
             maxHeight = Math.max(maxHeight, ty + H);
 
-            matrixJLabelList.add(jLabel);
+            matricesJLabelList.add(jLabel);
         }
         assert false;
     }
