@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,7 @@ class Canvas {
         initializeBoardsJLabelList(boards, layers);
 
         jPanel.setPreferredSize(new Dimension(maxWidth, maxHeight));
+        jPanel.addMouseListener(new RepaintMouseListener());
 
         jFrame.pack();
         jFrame.setVisible(true);
@@ -150,5 +154,47 @@ class Canvas {
 
             matricesJLabelList.add(jLabel);
         }
+    }
+
+    private class RepaintMouseListener extends MouseAdapter {
+        private CurrentState state = CurrentState.MATRICES;
+
+        private RepaintMouseListener() {
+            repaint();
+        }
+
+        private void repaint(){
+            if(state == CurrentState.BOARDS) {
+                for(JLabel jLabel : boardsJLabelList)
+                    jPanel.remove(jLabel);
+
+                for(JLabel jLabel : matricesJLabelList)
+                    jPanel.add(jLabel);
+
+                state = CurrentState.MATRICES;
+            }else {
+                for(JLabel jLabel : matricesJLabelList)
+                    jPanel.remove(jLabel);
+
+                for(JLabel jLabel : boardsJLabelList)
+                    jPanel.add(jLabel);
+
+                state = CurrentState.BOARDS;
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            if(e.getClickCount() == 2) {
+                repaint();
+                System.err.println(state);
+                jPanel.repaint();
+            }
+        }
+    }
+
+    private enum CurrentState {
+        BOARDS, MATRICES
     }
 }
