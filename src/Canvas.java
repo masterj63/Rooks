@@ -55,6 +55,14 @@ class Canvas {
         jFrame.pack();
         jFrame.setVisible(true);
         jFrame.repaint();
+
+        drawTest(jFrame);
+        jFrame.repaint();
+    }
+
+    private void drawTest(JFrame jFrame){
+        for(JLabel jLabel : matricesJLabelList)
+            jFrame.add(jLabel);
     }
 
     private void computeCoordinates(List<List<Integer>> layers) {
