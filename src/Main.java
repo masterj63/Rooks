@@ -14,10 +14,10 @@ class Main {
 
         System.out.println("0/5. started.");
 
-        List<byte[]> list = ListPositionByN.get();
+        List<byte[]> boardsList = ListPositionByN.get();
         System.out.println("1/5. positions computed.");
 
-        byte[][][] matrices = MatricesByListPosition.get(list);
+        byte[][][] matrices = MatricesByListPosition.get(boardsList);
         System.out.println("2/5. boards computed.");
 
         List<Integer>[] sort = Sorter.sort(matrices);
@@ -26,7 +26,7 @@ class Main {
         List<List<Integer>> layers = LayersBySort.get(sort);
         System.out.println("4/5. layers computed.");
 
-        Canvas.draw(layers, matrices);
+        Canvas.draw(layers, boardsList, matrices);
         System.out.println("5/5. i'm done.");
 
         Euler.get(layers, sort);
@@ -40,7 +40,7 @@ class Main {
         int layersNum = layers.size();
         System.out.println();
         System.out.println("REPORT");
-        System.out.printf("Number of boards: %d \n", list.size());
+        System.out.printf("Number of boards: %d \n", boardsList.size());
         System.out.printf("Number of layers: %d \n", layersNum);
         System.out.printf("Maximal layer size: %d \n", maxLayerSize);
         System.out.printf("Time spent: %.3f sec \n", time / 1000.0d);

@@ -12,16 +12,17 @@ class Canvas {
     private final int pxBetweenMat;
 
     private int maxWidth = 0, maxHeight = 0;
+    private final static int W = 100, H = 60;//max dim of label; note this if something goes wrong
 
     private Map<Integer, Point> indCoordMap = new HashMap<>();
     private List<JLabel> matricesJLabelList = new ArrayList<>();
     private List<JLabel> boardsJLabelList = new ArrayList<>();
 
-    static void draw(List<List<Integer>> layers, byte[][][] matrices) {
-        new Canvas(layers, matrices);
+    static void draw(List<List<Integer>> layers, List<byte[]> boards, byte[][][] matrices) {
+        new Canvas(layers, boards, matrices);
     }
 
-    private Canvas(List<List<Integer>> layers, byte[][][] matrices) {
+    private Canvas(List<List<Integer>> layers, List<byte[]> boards, byte[][][] matrices) {
         int graphDepth = layers.size();
         int graphWidth = 0;
         for (List<Integer> lay : layers)
@@ -45,9 +46,9 @@ class Canvas {
 
         jFrame.setContentPane(jScrollPane);
 
-        //drawMatrices(layers, matrices);
         computeCoordinates(layers);
         initializeMatricesJLabelList(matrices, layers);
+        initializeBoardsJLabelList(boards, layers);
 
         jPanel.setPreferredSize(new Dimension(maxWidth, maxHeight));
 
@@ -80,6 +81,45 @@ class Canvas {
                 initializeMatrixJLabel(matrices[i], indCoordMap.get(i));
     }
 
+    private void initializeBoardsJLabelList(List<byte[]> boards, List<List<Integer>> layers){
+        assert boardsJLabelList.isEmpty();
+        assert !indCoordMap.isEmpty();
+
+        for(List<Integer> list : layers)
+            for(int i : list)
+                initializeBoardJLabel(boards.get(i), indCoordMap.get(i));
+    }
+
+    private void initializeBoardJLabel(byte[] board, Point point){
+        int n = board.length;
+        int x = point.x, y = point.y;
+
+        for(int i = 0; i < n; i++) {
+            StringBuilder rowString = new StringBuilder();
+            rowString.append("<html>");
+
+            for(int j = 0; j < n; j++){
+                if(board[i] == j)
+                    rowString.append('*');
+                else
+                    rowString.append('-');
+                rowString.append(' ');
+            }
+
+            rowString.append("</html>");
+            JLabel jLabel = new JLabel(rowString.toString());
+
+            int tx = x;
+            int ty = y + i * pxBetweenNum;
+
+            jLabel.setBounds(tx, ty, W, H);
+            maxWidth = Math.max(maxWidth, tx + W);
+            maxHeight = Math.max(maxHeight, ty + H);
+
+            boardsJLabelList.add(jLabel);
+        }
+    }
+
     private void initializeMatrixJLabel(byte[][] mat, Point point) {
         int n = mat.length;
         int x = point.x, y = point.y;
@@ -102,13 +142,11 @@ class Canvas {
             int tx = x;
             int ty = y + i * pxBetweenNum;
 
-            final int W = 100, H = 60;//max dim of label; note this if something goes wrong
             jLabel.setBounds(tx, ty, W, H);
             maxWidth = Math.max(maxWidth, tx + W);
             maxHeight = Math.max(maxHeight, ty + H);
 
             matricesJLabelList.add(jLabel);
         }
-        assert false;
     }
 }
