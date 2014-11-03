@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 class ArrowFactory {
     private static final int X_MULT = 10;
@@ -31,5 +32,20 @@ class ArrowFactory {
         transform.rotate(rotate);
 
         return transform.createTransformedShape(arrowPolygon);
+    }
+
+    static BufferedImage arrow(int fromX, int fromY, int toX, int toY){
+        Shape shape = createArrowShape(fromX, fromY, toX, toY);
+
+        Rectangle rect = shape.getBounds();
+        int width = (int) rect.getWidth();
+        int height = (int) rect.getHeight();
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics g = img.getGraphics();
+        Graphics2D g2 = (Graphics2D) g;
+        g2.draw(shape);
+
+        return img;
     }
 }

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
@@ -18,11 +19,11 @@ class Canvas {
     private List<JLabel> matricesJLabelList = new ArrayList<>();
     private List<JLabel> boardsJLabelList = new ArrayList<>();
 
-    static void draw(List<List<Integer>> layers, List<byte[]> boards, byte[][][] matrices) {
-        new Canvas(layers, boards, matrices);
+    static void draw(List<List<Integer>> layers, List<Integer>[] sort, List<byte[]> boards, byte[][][] matrices) {
+        new Canvas(layers, sort, boards, matrices);
     }
 
-    private Canvas(List<List<Integer>> layers, List<byte[]> boards, byte[][][] matrices) {
+    private Canvas(List<List<Integer>> layers, List<Integer>[] sort, List<byte[]> boards, byte[][][] matrices) {
         pxBetweenNum = 15;
         pxBetweenMat = 100 + Main.N * pxBetweenNum;
 
@@ -48,6 +49,22 @@ class Canvas {
         jFrame.pack();
         jFrame.setVisible(true);
         jFrame.repaint();
+
+        drawArrows();
+        jFrame.repaint();
+    }
+
+    private void drawArrows(){
+        if(jPanel == null || jPanel.getGraphics() == null)
+            return;
+
+        JLabel lab = new JLabel("TEST");
+        lab.setBounds(480, 480, 60, 20);
+        jPanel.add(lab);
+
+        BufferedImage img = ArrowFactory.arrow(50, 60, 80, 120);
+        jPanel.getGraphics().drawImage(img, 500, 500, null);
+        jPanel.repaint();
     }
 
     private void computeCoordinates(List<List<Integer>> layers) {
