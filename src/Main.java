@@ -17,13 +17,13 @@ class Main {
         List<byte[]> list = ListPositionByN.get();
         System.out.println("1/5. positions computed.");
 
-        byte[][][] position = PositionByListPosition.get(list);
+        byte[][][] position = MatricesByListPosition.get(list);
         System.out.println("2/5. boards computed.");
 
         List<Integer>[] sort = Sorter.sort(position);
         System.out.println("3/5. matrices sorted.");
 
-        List<List<Integer>> layers = LayersBySortAndPosition.get(sort);
+        List<List<Integer>> layers = LayersBySort.get(sort);
         System.out.println("4/5. layers computed.");
 
         Canvas.draw(layers, position);

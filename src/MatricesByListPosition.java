@@ -1,6 +1,6 @@
 import java.util.List;
 
-class PositionByListPosition {
+class MatricesByListPosition {
     static byte[][][] get(List<byte[]> list) {
         byte[][][] res = new byte[list.size()][Main.N][];
         for (int i = 0; i < list.size(); i++) {
