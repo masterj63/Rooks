@@ -3,13 +3,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class LayersBySortAndPosition {
+class LayersBySort {
     static List<List<Integer>> get(List<Integer>[] sort) {
-        LayersBySortAndPosition instance = new LayersBySortAndPosition(sort);
+        LayersBySort instance = new LayersBySort(sort);
         return instance.LAYERS;
     }
 
-    private LayersBySortAndPosition(List<Integer>[] sort) {
+    private LayersBySort(List<Integer>[] sort) {
         this.SORT = sort;
         this.LAYERS = new ArrayList<>();
         this.LAYERS_SET = new ArrayList<>();
