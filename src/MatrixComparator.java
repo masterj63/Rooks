@@ -1,4 +1,4 @@
-class PositionMatrixComparator {
+class MatrixComparator {
     static int compare(byte[][] a, byte[][] b) {
         boolean less = false, greater = false;
         for (int i = 0; i < a.length; i++)

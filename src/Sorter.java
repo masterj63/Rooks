@@ -12,13 +12,13 @@ class Sorter {
             res[i] = new ArrayList<>();
 
             for (int j = 0; j < n; j++) {
-                int c = PositionMatrixComparator.compare(a[i], a[j]);
+                int c = MatrixComparator.compare(a[i], a[j]);
                 if (c != -1)
                     continue;
                 boolean betweenExists = false;
                 for (byte[][] pos1 : a) {
-                    int c1 = PositionMatrixComparator.compare(a[i], pos1);
-                    int c2 = PositionMatrixComparator.compare(pos1, a[j]);
+                    int c1 = MatrixComparator.compare(a[i], pos1);
+                    int c2 = MatrixComparator.compare(pos1, a[j]);
 
                     if (c1 == -1 && c2 == -1) {
                         betweenExists = true;
