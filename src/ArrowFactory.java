@@ -44,6 +44,7 @@ class ArrowFactory {
 
         Graphics g = img.getGraphics();
         Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.BLACK);
         g2.draw(shape);
 
         return img;
