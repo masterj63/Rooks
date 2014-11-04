@@ -50,21 +50,32 @@ class Canvas {
         jFrame.setVisible(true);
         jFrame.repaint();
 
-        drawArrows();
-        jFrame.repaint();
+        drawArrows(sort);
     }
 
-    private void drawArrows(){
-        if(jPanel == null || jPanel.getGraphics() == null)
-            return;
+    private void drawArrows(final List<Integer>[] sort){
+        JPanel jp = new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                for(int i = 0; i < sort.length; i++)
+                    for(int j : sort[i]){
+                        Point from = indCoordMap.get(i);
+                        Point to = indCoordMap.get(j);
 
-        JLabel lab = new JLabel("TEST");
-        lab.setBounds(480, 480, 60, 20);
-        jPanel.add(lab);
+//                        BufferedImage img = ArrowFactory.arrow(from.x, from.y, to.x, to.y);
+//                        g.drawImage(img, from.x, from.y, null);
+                        g.setColor(Color.BLACK);
+                        int dy = Main.N * pxBetweenNum;
+                        g.drawLine(from.x+10*pxBetweenNum, from.y+dy, to.x-pxBetweenNum, to.y+dy);
+                    }
+            }
+        };
+        jp.setOpaque(false);
+        jp.setBounds(0, 0, jPanel.getWidth(), jPanel.getHeight());
+        System.out.println(jPanel.getWidth() + " " + jPanel.getHeight());
+        jPanel.add(jp);
 
-        BufferedImage img = ArrowFactory.arrow(50, 60, 80, 120);
-        jPanel.getGraphics().drawImage(img, 500, 500, null);
-        jPanel.repaint();
     }
 
     private void computeCoordinates(List<List<Integer>> layers) {
