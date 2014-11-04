@@ -87,7 +87,7 @@ class Main {
             jTextArea.append(toReport.toString());
         }
 
-        jFrame.setVisible(true);
+        //jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 }
