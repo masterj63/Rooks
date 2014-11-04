@@ -25,7 +25,7 @@ class Canvas {
 
     private Canvas(List<List<Integer>> layers, List<Integer>[] sort, List<byte[]> boards, byte[][][] matrices) {
         pxBetweenNum = 15;
-        pxBetweenMat = 100 + Main.N * pxBetweenNum;
+        pxBetweenMat = 200 + Main.N * pxBetweenNum;
 
         JFrame jFrame = new JFrame("double click me");
         jFrame.setPreferredSize(new Dimension(800, 600));
