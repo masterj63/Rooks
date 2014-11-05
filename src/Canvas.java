@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
@@ -27,7 +26,7 @@ class Canvas {
         pxBetweenNum = 15;
         pxBetweenMat = 200 + Main.N * pxBetweenNum;
 
-        JFrame jFrame = new JFrame("double click me");
+        JFrame jFrame = new JFrame("Rooks");
         jFrame.setPreferredSize(new Dimension(800, 600));
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +72,6 @@ class Canvas {
         };
         jp.setOpaque(false);
         jp.setBounds(0, 0, jPanel.getWidth(), jPanel.getHeight());
-        System.out.println(jPanel.getWidth() + " " + jPanel.getHeight());
         jPanel.add(jp);
 
     }
@@ -134,14 +132,8 @@ class Canvas {
         }
 
         {
-            int[] perm = RankUtils.boardToPerm(board);
-            int ex = RankUtils.permEx(perm);
-            int el = RankUtils.permL(perm);
-            String footnote = String.format("ord:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
-            if ((ex + el) % 2 != 0) {
-                String report = String.format("odd (ex+el) found!!\n");
-                Main.toReport.append(report);
-            }
+            int rho = RankUtils.hypotheticalRank(board);
+            String footnote = "ker rho:" + rho;
 
             JLabel jLabel = new JLabel(footnote);
             jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
@@ -151,40 +143,15 @@ class Canvas {
         }
 
         {
-            byte[] kerov = RankUtils.kerovification(board);
-            int[] perm = RankUtils.boardToPerm(kerov);
-            int ex = RankUtils.permEx(perm);
-            int el = RankUtils.permL(perm);
-            String footnote;
-            if((ex + el) / 2 == layerIndex)
-                footnote = String.format("ker:ex=%d,el=%d,rho=%d", ex, el, (ex + el) / 2);
-            else {
-                footnote = String.format("<html><font color=red>ker:ex=%d,el=%d,rho=%d</font></html>", ex, el, (ex + el) / 2);
-                Main.toReport.append(String.format("Hypothesis fell in layer#%d\n", layerIndex));
-            }
-            if ((ex + el) % 2 != 0) {
-                String report = String.format("odd (ex+el) found!!\n");
-                Main.toReport.append(report);
-            }
-
             n+=1;
+            String footnote = "act rho:" + layerIndex;
+
             JLabel jLabel = new JLabel(footnote);
             jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
             maxWidth = Math.max(maxWidth, x + W);
             maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
             boardsJLabelList.add(jLabel);
             n-=1;
-        }
-
-        {
-            n+=2;
-            String footnote = String.format("act:rho=%d", layerIndex);
-            JLabel jLabel = new JLabel(footnote);
-            jLabel.setBounds(x, y + n * pxBetweenNum, W, H);
-            maxWidth = Math.max(maxWidth, x + W);
-            maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
-            boardsJLabelList.add(jLabel);
-            n-=2;
         }
     }
 

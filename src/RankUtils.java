@@ -4,7 +4,18 @@ class RankUtils {
     private RankUtils() {
     }
 
-    static byte[] kerovification(byte[] board) {
+    static int hypotheticalRank(byte[] board){
+        byte[] kerov = kerovification(board);
+        int[] perm = boardToPerm(kerov);
+
+        int ex = permEx(perm);
+        int el = permL(perm);
+        if(ex + el % 2 == 1)
+            Main.toReport.append("odd (ex+el) found!!\n");
+        return (ex + el) / 2;
+    }
+
+    private static byte[] kerovification(byte[] board) {
         int n = board.length;
         byte[] kerov = new byte[2 * n - 2];
         Arrays.fill(kerov, (byte) -1);
@@ -17,7 +28,7 @@ class RankUtils {
         return kerov;
     }
 
-    static int[] boardToPerm(byte[] board) {
+    private static int[] boardToPerm(byte[] board) {
         int n = board.length;
         int[] perm = new int[n];
 
@@ -36,7 +47,7 @@ class RankUtils {
         return perm;
     }
 
-    static int permEx(int[] perm) {
+    private static int permEx(int[] perm) {
         int res = 0;
         for (int i = 0; i < perm.length; i++)
             if (i < perm[i])
@@ -44,7 +55,7 @@ class RankUtils {
         return res;
     }
 
-    static int permL(int[] perm) {
+    private static int permL(int[] perm) {
         int res = 0;
         for (int i = 0; i < perm.length; i++)
             for (int j = 1 + i; j < perm.length; j++)
