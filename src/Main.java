@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import static java.lang.String.format;
+
 class Main {
     static int N = 5;
 
@@ -32,7 +34,7 @@ class Main {
             N = Integer.parseInt(answer);
         } catch (Throwable throwable) {}
 
-        jTextArea.append(String.format("Dimension set to %d.\n", N));
+        jTextArea.append(format("Dimension set to %d.\n\n", N));
 
         int boardsListSize = -1;
         int maxLayerSize = -1;
@@ -45,7 +47,7 @@ class Main {
             Calendar cal = Calendar.getInstance();
             String timeStamp = dateFormat.format(cal.getTime());
 
-            jTextArea.append(String.format("0/6. started at %s.\n", timeStamp));
+            jTextArea.append(format("0/6. started at %s.\n", timeStamp));
 
             List<byte[]> boardsList = ListPositionByN.get();
             jTextArea.append("1/6. positions computed.\n");
@@ -76,14 +78,14 @@ class Main {
         time += System.currentTimeMillis();
 
         jTextArea.append("\nREPORT\n");
-        jTextArea.append(String.format("Number of boards: %d \n", boardsListSize));
-        jTextArea.append(String.format("Number of layers: %d \n", layersNum));
-        jTextArea.append(String.format("Maximal layer size: %d \n", maxLayerSize));
-        jTextArea.append(String.format("Time spent: %.3f sec \n", time / 1000.0d));
+        jTextArea.append(format("Number of boards: %d \n", boardsListSize));
+        jTextArea.append(format("Number of layers: %d \n", layersNum));
+        jTextArea.append(format("Maximal layer size: %d \n", maxLayerSize));
+        jTextArea.append(format("Time spent: %.3f sec \n", time / 1000.0d));
 
 
         if(toReport.length() > 0){
-            jTextArea.append(String.format("\nAdditional info:"));
+            jTextArea.append(format("\nAdditional info:"));
             jTextArea.append(toReport.toString());
         }
 
