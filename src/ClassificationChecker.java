@@ -1,23 +1,26 @@
 import java.util.*;
 
 public class ClassificationChecker {
-    private final List<byte[]> boardsList;
-    //private final List<Integer>[] sort;
+    private final Board[] boards;
     private final Set<Integer>[] invSort;
-    private final Map<byte[], Integer> map;
+    private final Map<Board, Integer> boardIndMap;
 
-    private ClassificationChecker(List<byte[]> boardsList, List<Integer>[] sort) {
-        this.boardsList = boardsList;
-        //this.sort = sort;
-        this.invSort = Sorter.inverseSort(sort);
+    private ClassificationChecker(final List<byte[]> boardsList, final List<Integer>[] sort) {
+        final int n = boardsList.size();
 
-        map = new HashMap<>();
-        for (int i = 0; i < this.boardsList.size(); i++)
-            map.put(this.boardsList.get(i), i);
+        boards = new Board[boardsList.size()];
+        for (int i = 0; i < n; i++)
+            boards[i] = new Board(boardsList.get(i));
+
+        invSort = Sorter.inverseSort(sort);
+
+        boardIndMap = new HashMap<>();
+        for (int i = 0; i < n; i++)
+            boardIndMap.put(boards[i], i);
     }
 
     private boolean check() {
-        for (int i = 0; i < boardsList.size(); i++) {
+        for (int i = 0; i < boards.length; i++) {
             boolean b = check(i);
             if (!b)
                 return false;
@@ -48,7 +51,66 @@ public class ClassificationChecker {
     }
 
     private Set<Integer> getNMinus(int ind) {
-        throw new UnsupportedOperationException();
+        Set<Integer> set = new HashSet<>();
+        Board M = getM(ind);
+
+        for (int i = 0; i < M.size; i++) {
+            byte j = M.get(i);
+            if (j == -1)
+                continue;
+            Board b = M.remove(i);
+            Integer t = boardIndMap.get(b);
+            set.add(t);
+        }
+
+        return set;
+    }
+
+    private Board getM(int ind) {
+        Board b = getMWave(ind);
+        final int n = b.size;
+        byte[] res = new byte[n];
+        byte[] cols = new byte[n];
+
+        for(byte i = 0; i < n; i++){
+            byte j = b.get(i);
+            if(j == -1)
+                continue;
+            cols[j] = i;
+        }
+
+        f:for(int i = 0; i < n; i++){
+            byte j = b.get(i);
+            if(j == -1)
+                continue;
+            for(int k = 1 + j; k < i; k++){
+                //if(rows[k] == -1 || cols[k] == -1)
+                if(b.get(k) == -1 || cols[k] == -1)
+                    continue f;
+            }
+            res[i] = j;
+        }
+        return new Board(res);
+    }
+
+    private Board getMWave(int ind) {
+        final int n = boards.length;
+        Board board = boards[ind];
+        byte[] b = new byte[board.size];
+        f:for(int i = 0; i < board.size; i++){
+            byte j = board.get(i);
+            if(j == -1)
+                continue;
+            for(int p = 0; p < n; p++){
+                byte q = board.get(p);
+                if(q == -1)
+                    continue;
+                if(i > p && j < q)
+                    continue f;
+            }
+            b[i] = j;
+        }
+        return new Board(b);
     }
 
     private Set<Integer> getNZero(int ind) {
