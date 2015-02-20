@@ -84,6 +84,27 @@ public class ClassificationCheckerTest {
             Board mWave = new Board(waveBoard);
             mWaveBoardList.add(mWave);
         }
+
+        {
+            boardNotesStringList.add("Paper2, p. 14/944, D 73 right");
+            byte[] board = {-1, -1, 0, -1, 3, 1, 4, 5};
+            List<byte[]> list = new ArrayList<>();
+            list.add(board);
+
+            Constructor<ClassificationChecker> constructor =
+                    ClassificationChecker.class.getDeclaredConstructor(List.class, List[].class);
+            constructor.setAccessible(true);
+            ClassificationChecker checker = constructor.newInstance(list, sort);
+            classificationCheckerList.add(checker);
+
+            Method getMWave = ClassificationChecker.class.getDeclaredMethod("getMWave", Integer.TYPE);
+            getMWave.setAccessible(true);
+            getMWaveMethodList.add(getMWave);
+
+            byte[] waveBoard = {-1, -1, 0, -1, 3, -1, 4, 5};
+            Board mWave = new Board(waveBoard);
+            mWaveBoardList.add(mWave);
+        }
     }
 
     @Test
