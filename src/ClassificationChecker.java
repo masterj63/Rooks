@@ -94,10 +94,12 @@ public class ClassificationChecker {
     }
 
     private Board getMWave(int ind) {
-        final int n = boards.length;
         Board board = boards[ind];
-        byte[] b = new byte[board.size];
-        f:for(int i = 0; i < board.size; i++){
+        final int n = board.size;
+        byte[] b = new byte[n];
+        for(int i = 0; i < b.length; i++)
+            b[i] = -1;
+        f:for(int i = 0; i < n; i++){
             byte j = board.get(i);
             if(j == -1)
                 continue;
