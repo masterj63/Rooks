@@ -25,6 +25,15 @@ class Board {
         return new Board(b);
     }
 
+    Board add(int i, byte j) {
+        if (board[i] != -1)
+            throw new IllegalArgumentException();
+
+        byte[] b = board.clone();
+        b[i] = j;
+        return new Board(b);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
