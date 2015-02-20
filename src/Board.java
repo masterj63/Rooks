@@ -16,6 +16,18 @@ class Board {
         return board[i];
     }
 
+    byte[] cols() {
+        byte[] cols = new byte[size];
+        Arrays.fill(cols, (byte) -1);
+        for(byte i = 0; i < size; i++){
+            byte j = board[i];
+            if(j == -1)
+                continue;
+            cols[j] = i;
+        }
+        return cols;
+    }
+
     Board remove(int i) {
         if (board[i] == -1)
             return this;
