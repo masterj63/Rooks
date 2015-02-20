@@ -82,12 +82,13 @@ public class ClassificationChecker {
         Board d = boards[ind];
         byte[] cols = d.cols();
 
-        f:for(int i = 0; i < n; i++){
+        f:
+        for (int i = 0; i < n; i++) {
             byte j = b.get(i);
-            if(j == -1)
+            if (j == -1)
                 continue;
-            for(int k = 1 + j; k < i; k++){
-                if(d.get(k) == -1 || cols[k] == -1)
+            for (int k = 1 + j; k < i; k++) {
+                if (d.get(k) == -1 || cols[k] == -1)
                     continue f;
             }
             res[i] = j;
@@ -100,15 +101,16 @@ public class ClassificationChecker {
         final int n = board.size;
         byte[] b = new byte[n];
         fill(b, (byte) -1);
-        f:for(int i = 0; i < n; i++){
+        f:
+        for (int i = 0; i < n; i++) {
             byte j = board.get(i);
-            if(j == -1)
+            if (j == -1)
                 continue;
-            for(int p = 0; p < n; p++){
+            for (int p = 0; p < n; p++) {
                 byte q = board.get(p);
-                if(q == -1)
+                if (q == -1)
                     continue;
-                if(i > p && j < q)
+                if (i > p && j < q)
                     continue f;
             }
             b[i] = j;
@@ -116,33 +118,60 @@ public class ClassificationChecker {
         return new Board(b);
     }
 
-    private Board getDUp(int ind, int i){
+    private Board getDRight(int ind, int i) {
         Board b = boards[ind];
 
         byte j = b.get(i);
-        if(j == -1)
+        if (j == -1)
             throw new IllegalArgumentException();
 
         int m = -1;
-        for(int k = i - 1; j < k; k--)
-            if(b.get(k) == -1){
+        for (int k = 1 + j; k < i; k++)
+            if (b.get(k) == -1) {
                 m = k;
                 break;
             }
-        if(m == -1)
+        if (m == -1)
             return null;
 
-        for(int p = 0; p < b.size; p++){
+        for (int p = 0; p < b.size; p++) {
             int q = b.get(p);
-            if(q == -1)
+            if (q == -1)
                 continue;
-            if(rookIsGreater(i, j, p, q) && !rookIsGreater(m, j, p, q))
+            if (rookIsGreater(i, j, p, q) && !rookIsGreater(i, m, p, q))
+                return null;
+        }
+
+        return b.remove(i).add(i, (byte) m);
+    }
+
+    private Board getDUp(int ind, int i) {
+        Board b = boards[ind];
+
+        byte j = b.get(i);
+        if (j == -1)
+            throw new IllegalArgumentException();
+
+        int m = -1;
+        for (int k = i - 1; j < k; k--)
+            if (b.get(k) == -1) {
+                m = k;
+                break;
+            }
+        if (m == -1)
+            return null;
+
+        for (int p = 0; p < b.size; p++) {
+            int q = b.get(p);
+            if (q == -1)
+                continue;
+            if (rookIsGreater(i, j, p, q) && !rookIsGreater(m, j, p, q))
                 return null;
         }
 
         return b.remove(i).add(m, j);
     }
-
+    
     private Set<Integer> getNZero(int ind) {
         throw new UnsupportedOperationException();
     }
@@ -151,7 +180,7 @@ public class ClassificationChecker {
         throw new UnsupportedOperationException();
     }
 
-    private static boolean rookIsGreater(int a, int b, int c, int d){
+    private static boolean rookIsGreater(int a, int b, int c, int d) {
         return a > c && b < d;
     }
 }
