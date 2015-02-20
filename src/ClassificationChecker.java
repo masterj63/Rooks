@@ -1,5 +1,7 @@
 import java.util.*;
 
+import static java.util.Arrays.fill;
+
 public class ClassificationChecker {
     private final Board[] boards;
     private final Set<Integer>[] invSort;
@@ -75,9 +77,9 @@ public class ClassificationChecker {
         Board b = getMWave(ind);
         final int n = b.size;
         byte[] res = new byte[n];
-        Arrays.fill(res, (byte) -1);
+        fill(res, (byte) -1);
         byte[] cols = new byte[n];
-        Arrays.fill(cols, (byte) -1);
+        fill(cols, (byte) -1);
 
         Board d = boards[ind];
         for(byte i = 0; i < n; i++){
@@ -104,8 +106,7 @@ public class ClassificationChecker {
         Board board = boards[ind];
         final int n = board.size;
         byte[] b = new byte[n];
-        for(int i = 0; i < b.length; i++)
-            b[i] = -1;
+        fill(b, (byte) -1);
         f:for(int i = 0; i < n; i++){
             byte j = board.get(i);
             if(j == -1)
