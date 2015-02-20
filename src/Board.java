@@ -44,4 +44,11 @@ class Board {
     public int hashCode() {
         return Arrays.hashCode(board);
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "board=" + Arrays.toString(board) +
+                '}';
+    }
 }
