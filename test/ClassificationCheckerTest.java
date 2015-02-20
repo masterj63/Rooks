@@ -15,16 +15,18 @@ public class ClassificationCheckerTest {
 
     private static List<Method> getMWaveMethodList = new ArrayList<>();
     private static List<Board> mWaveBoardList = new ArrayList<>();
+    private static List<Board> mBoardList = new ArrayList<>();
 
     private static class TestAdder {
         final List<Integer>[] sort = new List[0];
         String testNote = null;
         byte[] board = null;
         byte[] mWaveBoard = null;
+        byte[] mBoard = null;
 
         void add() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
                 InstantiationException {
-            if(testNote == null || board == null || mWaveBoard == null)
+            if(testNote == null || board == null || mWaveBoard == null || mBoard == null)
                 throw new IllegalStateException();
 
             boardNotesStringList.add(testNote);
@@ -44,6 +46,9 @@ public class ClassificationCheckerTest {
 
             Board mWave = new Board(mWaveBoard);
             mWaveBoardList.add(mWave);
+
+            Board m = new Board(mBoard);
+            mBoardList.add(m);
         }
     }
 
@@ -57,6 +62,7 @@ public class ClassificationCheckerTest {
             test.testNote = "Paper2, p. 14/944, D";
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, -1, 5};
+            test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, -1, -1};
             test.add();
         }
 
@@ -65,6 +71,7 @@ public class ClassificationCheckerTest {
             test.testNote = "Paper2, p. 14/944, D 62 54";
             test.board = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 1, 3, -1, 5};
+            test.mBoard = new byte[]{-1, -1, -1, -1, -1, -1, -1, -1};
             test.add();
         }
 
@@ -73,6 +80,7 @@ public class ClassificationCheckerTest {
             test.testNote = "Paper2, p. 14/944, D 73 right";
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 4, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, 4, 5};
+            test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, 4, -1};
             test.add();
         }
 
@@ -81,6 +89,16 @@ public class ClassificationCheckerTest {
             test.testNote = "Paper2, p. 15/945, D 33 62";
             test.board = new byte[]{-1, -1, 1, 0, 3, 2};
             test.mWaveBoard = new byte[]{-1, -1, 1, -1, 3, -1};
+            test.mBoard = new byte[]{-1, -1, 1, -1, 3, -1};
+            test.add();
+        }
+
+        {
+            TestAdder test = new TestAdder();
+            test.testNote = "my test";
+            test.board = new byte[]{-1, -1, -1, 2, 0, 1};
+            test.mWaveBoard = new byte[]{-1, -1, -1, 2, -1, -1};
+            test.mBoard = new byte[]{-1, -1, -1, 2, -1, -1};
             test.add();
         }
     }
@@ -95,6 +113,9 @@ public class ClassificationCheckerTest {
 
         assertEquals(classificationCheckerList.size(),
                 mWaveBoardList.size());
+
+        assertEquals(classificationCheckerList.size(),
+                mBoardList.size());
     }
 
     @Test
