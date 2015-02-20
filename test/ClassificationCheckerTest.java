@@ -77,6 +77,15 @@ public class ClassificationCheckerTest {
 
         {
             TestAdder test = new TestAdder();
+            test.testNote = "Paper2, p. 14/944, D 62 up";
+            test.board = new byte[]{-1, -1, 0, 1, 3, -1, 2, 5};
+            test.mWaveBoard = new byte[]{-1, -1, 0, 1, 3, -1, -1, 5};
+            test.mBoard = new byte[]{-1, -1, -1, 1, 3, -1, -1, -1};
+            test.add();
+        }
+
+        {
+            TestAdder test = new TestAdder();
             test.testNote = "Paper2, p. 14/944, D 73 right";
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 4, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, 4, 5};
