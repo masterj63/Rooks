@@ -78,16 +78,9 @@ public class ClassificationChecker {
         final int n = b.size;
         byte[] res = new byte[n];
         fill(res, (byte) -1);
-        byte[] cols = new byte[n];
-        fill(cols, (byte) -1);
 
         Board d = boards[ind];
-        for(byte i = 0; i < n; i++){
-            byte j = d.get(i);
-            if(j == -1)
-                continue;
-            cols[j] = i;
-        }
+        byte[] cols = d.cols();
 
         f:for(int i = 0; i < n; i++){
             byte j = b.get(i);
