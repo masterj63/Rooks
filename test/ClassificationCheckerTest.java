@@ -23,10 +23,11 @@ public class ClassificationCheckerTest {
         byte[] board = null;
         byte[] mWaveBoard = null;
         byte[] mBoard = null;
+        byte[] nMinusBoard = null;
 
         void add() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
                 InstantiationException {
-            if(testNote == null || board == null || mWaveBoard == null || mBoard == null)
+            if (testNote == null || board == null || mWaveBoard == null || mBoard == null || nMinusBoard == null)
                 throw new IllegalStateException();
 
             boardNotesStringList.add(testNote);
@@ -63,6 +64,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, -1, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, -1, -1};
+            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, 1, 2, 5};
             test.add();
         }
 
@@ -72,6 +74,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 1, 3, -1, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, -1, -1, -1, -1};
+            test.nMinusBoard = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
             test.add();
         }
 
@@ -81,6 +84,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, 1, 3, -1, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, 1, 3, -1, -1, 5};
             test.mBoard = new byte[]{-1, -1, -1, 1, 3, -1, -1, -1};
+            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, -1, 2, 5};
             test.add();
         }
 
@@ -90,6 +94,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 4, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, 4, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, 4, -1};
+            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, 1, -1, 5};
             test.add();
         }
 
@@ -99,6 +104,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 1, 0, 3, 2};
             test.mWaveBoard = new byte[]{-1, -1, 1, -1, 3, -1};
             test.mBoard = new byte[]{-1, -1, 1, -1, 3, -1};
+            test.nMinusBoard = new byte[]{-1, -1, -1, 0, -1, 2};
             test.add();
         }
 
@@ -108,6 +114,7 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, -1, 2, 0, 1};
             test.mWaveBoard = new byte[]{-1, -1, -1, 2, -1, -1};
             test.mBoard = new byte[]{-1, -1, -1, 2, -1, -1};
+            test.nMinusBoard = new byte[]{-1, -1, -1, -1, 0, 1};
             test.add();
         }
     }
