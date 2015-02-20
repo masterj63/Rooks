@@ -172,6 +172,30 @@ public class ClassificationChecker {
         return b.remove(i).add(m, j);
     }
 
+    private List<byte[]> getB(int ind, int i, int j) {
+        List<byte[]> res = new ArrayList<>();
+        Board board = boards[ind];
+
+        f:
+        for (int a = 0; a < board.size; a++) {
+            int b = board.get(a);
+            if (b == -1)
+                continue;
+            if (!rookIsGreater(a, b, i, j))
+                continue;
+            for (int p = 0; p < board.size; p++) {
+                int q = board.get(p);
+                if (q == -1)
+                    continue;
+                if (rookIsGreater(a, b, p, q) && rookIsGreater(p, q, i, j))
+                    continue f;
+            }
+            res.add(new byte[]{(byte) a, (byte) b});
+        }
+
+        return res;
+    }
+
     private Set<Integer> getNZero(int ind) {
         throw new UnsupportedOperationException();
     }
