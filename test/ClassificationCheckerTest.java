@@ -1,4 +1,3 @@
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,14 +16,19 @@ public class ClassificationCheckerTest {
     private static List<Method> getMWaveMethodList = new ArrayList<>();
     private static List<Board> mWaveBoardList = new ArrayList<>();
 
-    @BeforeClass
-    public static void makeClassificationCheckers() throws NoSuchMethodException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
-        List<Integer>[] sort = new List[0];
+    private static class TestAdder {
+        final List<Integer>[] sort = new List[0];
+        String testNote = null;
+        byte[] board = null;
+        byte[] mWaveBoard = null;
 
-        {
-            boardNotesStringList.add("Paper2, p. 14/944, D");
-            byte[] board = {-1, -1, 0, -1, 3, 1, 2, 5};
+        void add() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+                InstantiationException {
+            if(testNote == null || board == null || mWaveBoard == null)
+                throw new IllegalStateException();
+
+            boardNotesStringList.add(testNote);
+
             List<byte[]> list = new ArrayList<>();
             list.add(board);
 
@@ -38,9 +42,22 @@ public class ClassificationCheckerTest {
             getMWave.setAccessible(true);
             getMWaveMethodList.add(getMWave);
 
-            byte[] waveBoard = {-1, -1, 0, -1, 3, -1, -1, 5};
-            Board mWave = new Board(waveBoard);
+            Board mWave = new Board(mWaveBoard);
             mWaveBoardList.add(mWave);
+        }
+    }
+
+    @BeforeClass
+    public static void makeClassificationCheckers() throws NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        List<Integer>[] sort = new List[0];
+
+        {
+            TestAdder test = new TestAdder();
+            test.testNote = "Paper2, p. 14/944, D";
+            test.board = new byte[]{-1, -1, 0, -1, 3, 1, 2, 5};
+            test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, -1, 5};
+            test.add();
         }
 
         {
