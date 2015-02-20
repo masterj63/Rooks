@@ -14,6 +14,8 @@ public class ClassificationCheckerTest {
     private static List<String> boardNotesStringList = new ArrayList<>();
 
     private static List<Method> getMWaveMethodList = new ArrayList<>();
+    private static List<Method> getMMethodList = new ArrayList<>();
+
     private static List<Board> mWaveBoardList = new ArrayList<>();
     private static List<Board> mBoardList = new ArrayList<>();
 
@@ -23,11 +25,10 @@ public class ClassificationCheckerTest {
         byte[] board = null;
         byte[] mWaveBoard = null;
         byte[] mBoard = null;
-        byte[] nMinusBoard = null;
 
         void add() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
                 InstantiationException {
-            if (testNote == null || board == null || mWaveBoard == null || mBoard == null || nMinusBoard == null)
+            if (testNote == null || board == null || mWaveBoard == null || mBoard == null)
                 throw new IllegalStateException();
 
             boardNotesStringList.add(testNote);
@@ -44,6 +45,10 @@ public class ClassificationCheckerTest {
             Method getMWave = ClassificationChecker.class.getDeclaredMethod("getMWave", Integer.TYPE);
             getMWave.setAccessible(true);
             getMWaveMethodList.add(getMWave);
+
+            Method getM = ClassificationChecker.class.getDeclaredMethod("getM", Integer.TYPE);
+            getM.setAccessible(true);
+            getMMethodList.add(getM);
 
             Board mWave = new Board(mWaveBoard);
             mWaveBoardList.add(mWave);
@@ -64,7 +69,6 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, -1, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, -1, -1};
-            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, 1, 2, 5};
             test.add();
         }
 
@@ -74,7 +78,6 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 1, 3, -1, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, -1, -1, -1, -1};
-            test.nMinusBoard = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
             test.add();
         }
 
@@ -83,8 +86,7 @@ public class ClassificationCheckerTest {
             test.testNote = "Paper2, p. 14/944, D 62 up";
             test.board = new byte[]{-1, -1, 0, 1, 3, -1, 2, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, 1, 3, -1, -1, 5};
-            test.mBoard = new byte[]{-1, -1, -1, 1, 3, -1, -1, -1};
-            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, -1, 2, 5};
+            test.mBoard = new byte[]{-1, -1, -1, 1, 3, -1, -1, -1};//TODO
             test.add();
         }
 
@@ -94,7 +96,6 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 0, -1, 3, 1, 4, 5};
             test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, 4, 5};
             test.mBoard = new byte[]{-1, -1, -1, -1, 3, -1, 4, -1};
-            test.nMinusBoard = new byte[]{-1, -1, 0, -1, -1, 1, -1, 5};
             test.add();
         }
 
@@ -104,7 +105,6 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, 1, 0, 3, 2};
             test.mWaveBoard = new byte[]{-1, -1, 1, -1, 3, -1};
             test.mBoard = new byte[]{-1, -1, 1, -1, 3, -1};
-            test.nMinusBoard = new byte[]{-1, -1, -1, 0, -1, 2};
             test.add();
         }
 
@@ -114,7 +114,6 @@ public class ClassificationCheckerTest {
             test.board = new byte[]{-1, -1, -1, 2, 0, 1};
             test.mWaveBoard = new byte[]{-1, -1, -1, 2, -1, -1};
             test.mBoard = new byte[]{-1, -1, -1, 2, -1, -1};
-            test.nMinusBoard = new byte[]{-1, -1, -1, -1, 0, 1};
             test.add();
         }
     }
@@ -142,9 +141,23 @@ public class ClassificationCheckerTest {
             Method getMWave = getMWaveMethodList.get(i);
             Board mWave = mWaveBoardList.get(i);
 
-            assertEquals(boardNotesStringList.get(i),
-                    getMWave.invoke(checker, 0),
-                    mWave);
+            assertEquals(boardNotesStringList.get(i) + String.format(" M-wave-test #%d", i),
+                    mWave,
+                    getMWave.invoke(checker, 0));
+        }
+    }
+
+    @Test
+    public void testGetM() throws InvocationTargetException, IllegalAccessException {
+        int n = classificationCheckerList.size();
+        for (int i = 0; i < n; i++) {
+            ClassificationChecker checker = classificationCheckerList.get(i);
+            Method getM = getMMethodList.get(i);
+            Board m = mBoardList.get(i);
+
+            assertEquals(boardNotesStringList.get(i) + String.format(" M-test #%d", i),
+                    m,
+                    getM.invoke(checker, 0));
         }
     }
 }
