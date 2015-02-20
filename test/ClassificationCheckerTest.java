@@ -140,11 +140,11 @@ public class ClassificationCheckerTest {
         for (int i = 0; i < n; i++) {
             ClassificationChecker checker = classificationCheckerList.get(i);
             Method getMWave = getMWaveMethodList.get(i);
-            Board board = mWaveBoardList.get(i);
+            Board mWave = mWaveBoardList.get(i);
 
             assertEquals(boardNotesStringList.get(i),
                     getMWave.invoke(checker, 0),
-                    board);
+                    mWave);
         }
     }
 }
