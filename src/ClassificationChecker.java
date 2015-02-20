@@ -130,4 +130,8 @@ public class ClassificationChecker {
     private Set<Integer> getNPlus(int ind) {
         throw new UnsupportedOperationException();
     }
+
+    private static boolean rookIsGreater(int a, int b, int c, int d){
+        return a > c && b < d;
+    }
 }
