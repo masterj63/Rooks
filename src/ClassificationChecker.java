@@ -75,10 +75,13 @@ public class ClassificationChecker {
         Board b = getMWave(ind);
         final int n = b.size;
         byte[] res = new byte[n];
+        Arrays.fill(res, (byte) -1);
         byte[] cols = new byte[n];
+        Arrays.fill(cols, (byte) -1);
 
+        Board d = boards[ind];
         for(byte i = 0; i < n; i++){
-            byte j = b.get(i);
+            byte j = d.get(i);
             if(j == -1)
                 continue;
             cols[j] = i;
@@ -89,8 +92,7 @@ public class ClassificationChecker {
             if(j == -1)
                 continue;
             for(int k = 1 + j; k < i; k++){
-                //if(rows[k] == -1 || cols[k] == -1)
-                if(b.get(k) == -1 || cols[k] == -1)
+                if(d.get(k) == -1 || cols[k] == -1)
                     continue f;
             }
             res[i] = j;
