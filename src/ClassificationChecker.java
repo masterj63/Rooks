@@ -5,7 +5,12 @@ public class ClassificationChecker {
     private final Set<Integer>[] invSort;
     private final Map<Board, Integer> boardIndMap;
 
-    private ClassificationChecker(final List<byte[]> boardsList, final List<Integer>[] sort) {
+    static boolean check(List<byte[]> boardsList, List<Integer>[] sort) {
+        ClassificationChecker checker = new ClassificationChecker(boardsList, sort);
+        return checker.check();
+    }
+
+    private ClassificationChecker(List<byte[]> boardsList, List<Integer>[] sort) {
         final int n = boardsList.size();
 
         boards = new Board[boardsList.size()];
