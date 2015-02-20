@@ -61,66 +61,19 @@ public class ClassificationCheckerTest {
         }
 
         {
-            boardNotesStringList.add("Paper2, p. 14/944, D 62 54");
-            byte[] board = {-1, -1, 0, -1, 1, 3, 2, 5};
-            List<byte[]> list = new ArrayList<>();
-            list.add(board);
-
-            Constructor<ClassificationChecker> constructor =
-                    ClassificationChecker.class.getDeclaredConstructor(List.class, List[].class);
-            constructor.setAccessible(true);
-            ClassificationChecker checker = constructor.newInstance(list, sort);
-            classificationCheckerList.add(checker);
-
-            Method getMWave = ClassificationChecker.class.getDeclaredMethod("getMWave", Integer.TYPE);
-            getMWave.setAccessible(true);
-            getMWaveMethodList.add(getMWave);
-
-            byte[] waveBoard = {-1, -1, 0, -1, 1, 3, -1, 5};
-            Board mWave = new Board(waveBoard);
-            mWaveBoardList.add(mWave);
+            TestAdder test = new TestAdder();
+            test.testNote = "Paper2, p. 14/944, D 62 54";
+            test.board = new byte[]{-1, -1, 0, -1, 1, 3, 2, 5};
+            test.mWaveBoard = new byte[]{-1, -1, 0, -1, 1, 3, -1, 5};
+            test.add();
         }
 
         {
-            boardNotesStringList.add("Paper2, p. 14/944, D 62 up");
-            byte[] board = {-1, -1, 0, 1, 3, -1, 2, 5};
-            List<byte[]> list = new ArrayList<>();
-            list.add(board);
-
-            Constructor<ClassificationChecker> constructor =
-                    ClassificationChecker.class.getDeclaredConstructor(List.class, List[].class);
-            constructor.setAccessible(true);
-            ClassificationChecker checker = constructor.newInstance(list, sort);
-            classificationCheckerList.add(checker);
-
-            Method getMWave = ClassificationChecker.class.getDeclaredMethod("getMWave", Integer.TYPE);
-            getMWave.setAccessible(true);
-            getMWaveMethodList.add(getMWave);
-
-            byte[] waveBoard = {-1, -1, 0, 1, 3, -1, -1, 5};
-            Board mWave = new Board(waveBoard);
-            mWaveBoardList.add(mWave);
-        }
-
-        {
-            boardNotesStringList.add("Paper2, p. 14/944, D 73 right");
-            byte[] board = {-1, -1, 0, -1, 3, 1, 4, 5};
-            List<byte[]> list = new ArrayList<>();
-            list.add(board);
-
-            Constructor<ClassificationChecker> constructor =
-                    ClassificationChecker.class.getDeclaredConstructor(List.class, List[].class);
-            constructor.setAccessible(true);
-            ClassificationChecker checker = constructor.newInstance(list, sort);
-            classificationCheckerList.add(checker);
-
-            Method getMWave = ClassificationChecker.class.getDeclaredMethod("getMWave", Integer.TYPE);
-            getMWave.setAccessible(true);
-            getMWaveMethodList.add(getMWave);
-
-            byte[] waveBoard = {-1, -1, 0, -1, 3, -1, 4, 5};
-            Board mWave = new Board(waveBoard);
-            mWaveBoardList.add(mWave);
+            TestAdder test = new TestAdder();
+            test.testNote = "Paper2, p. 14/944, D 73 right";
+            test.board = new byte[]{-1, -1, 0, -1, 3, 1, 4, 5};
+            test.mWaveBoard = new byte[]{-1, -1, 0, -1, 3, -1, 4, 5};
+            test.add();
         }
     }
 
