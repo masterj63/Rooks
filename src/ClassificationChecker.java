@@ -123,6 +123,33 @@ public class ClassificationChecker {
         return new Board(b);
     }
 
+    private Board getDUp(int ind, int i){
+        Board b = boards[ind];
+
+        byte j = b.get(i);
+        if(j == -1)
+            throw new IllegalArgumentException();
+
+        int m = -1;
+        for(int k = i - 1; j < k; k--)
+            if(b.get(k) == -1){
+                m = k;
+                break;
+            }
+        if(m == -1)
+            return null;
+
+        for(int p = 0; p < b.size; p++){
+            int q = b.get(p);
+            if(q == -1)
+                continue;
+            if(rookIsGreater(i, j, p, q) && !rookIsGreater(m, j, p, q))
+                return null;
+        }
+
+        return b.remove(i).add(m, j);
+    }
+
     private Set<Integer> getNZero(int ind) {
         throw new UnsupportedOperationException();
     }
