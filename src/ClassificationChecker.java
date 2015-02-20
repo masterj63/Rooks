@@ -171,7 +171,7 @@ public class ClassificationChecker {
 
         return b.remove(i).add(m, j);
     }
-    
+
     private Set<Integer> getNZero(int ind) {
         throw new UnsupportedOperationException();
     }

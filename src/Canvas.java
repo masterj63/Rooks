@@ -2,8 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class Canvas {
     private final JPanel jPanel;
@@ -52,13 +54,13 @@ class Canvas {
         drawArrows(sort);
     }
 
-    private void drawArrows(final List<Integer>[] sort){
-        JPanel jp = new JPanel(){
+    private void drawArrows(final List<Integer>[] sort) {
+        JPanel jp = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                for(int i = 0; i < sort.length; i++)
-                    for(int j : sort[i]){
+                for (int i = 0; i < sort.length; i++)
+                    for (int j : sort[i]) {
                         Point from = indCoordMap.get(i);
                         Point to = indCoordMap.get(j);
 
@@ -66,7 +68,7 @@ class Canvas {
 //                        g.drawImage(img, from.x, from.y, null);
                         g.setColor(Color.BLACK);
                         int dy = Main.N * pxBetweenNum;
-                        g.drawLine(from.x+10*pxBetweenNum, from.y+dy, to.x-pxBetweenNum, to.y+dy);
+                        g.drawLine(from.x + 10 * pxBetweenNum, from.y + dy, to.x - pxBetweenNum, to.y + dy);
                     }
             }
         };
@@ -91,7 +93,7 @@ class Canvas {
         }
     }
 
-    private void initializeBoardsJLabelList(List<byte[]> boards, List<List<Integer>> layers){
+    private void initializeBoardsJLabelList(List<byte[]> boards, List<List<Integer>> layers) {
         assert boardsJLabelList.isEmpty();
         assert !indCoordMap.isEmpty();
 
@@ -143,7 +145,7 @@ class Canvas {
         }
 
         {
-            n+=1;
+            n += 1;
             String footnote = "act rho:" + layerIndex;
 
             JLabel jLabel = new JLabel(footnote);
@@ -151,16 +153,16 @@ class Canvas {
             maxWidth = Math.max(maxWidth, x + W);
             maxHeight = Math.max(maxHeight, y + n * pxBetweenNum + H);
             boardsJLabelList.add(jLabel);
-            n-=1;
+            n -= 1;
         }
     }
 
-    private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers){
+    private void initializeMatricesJLabelList(byte[][][] matrices, List<List<Integer>> layers) {
         assert matricesJLabelList.isEmpty();
         assert !indCoordMap.isEmpty();
 
-        for(List<Integer> list : layers)
-            for(int i : list)
+        for (List<Integer> list : layers)
+            for (int i : list)
                 initializeMatrixJLabel(matrices[i], indCoordMap.get(i));
     }
 
@@ -203,20 +205,20 @@ class Canvas {
             repaint();
         }
 
-        private void repaint(){
-            if(state == CurrentState.BOARDS) {
-                for(JLabel jLabel : boardsJLabelList)
+        private void repaint() {
+            if (state == CurrentState.BOARDS) {
+                for (JLabel jLabel : boardsJLabelList)
                     jPanel.remove(jLabel);
 
-                for(JLabel jLabel : matricesJLabelList)
+                for (JLabel jLabel : matricesJLabelList)
                     jPanel.add(jLabel);
 
                 state = CurrentState.MATRICES;
-            }else {
-                for(JLabel jLabel : matricesJLabelList)
+            } else {
+                for (JLabel jLabel : matricesJLabelList)
                     jPanel.remove(jLabel);
 
-                for(JLabel jLabel : boardsJLabelList)
+                for (JLabel jLabel : boardsJLabelList)
                     jPanel.add(jLabel);
 
                 state = CurrentState.BOARDS;
@@ -226,7 +228,7 @@ class Canvas {
         @Override
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
-            if(e.getClickCount() == 2) {
+            if (e.getClickCount() == 2) {
                 repaint();
                 jPanel.repaint();
             }

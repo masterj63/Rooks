@@ -4,13 +4,13 @@ class RankUtils {
     private RankUtils() {
     }
 
-    static int hypotheticalRank(byte[] board){
+    static int hypotheticalRank(byte[] board) {
         byte[] kerov = kerovification(board);
         int[] perm = boardToPerm(kerov);
 
         int ex = permEx(perm);
         int el = permL(perm);
-        if(ex + el % 2 == 1)
+        if (ex + el % 2 == 1)
             Main.toReport.append("odd (ex+el) found!!\n");
         return (ex + el) / 2;
     }

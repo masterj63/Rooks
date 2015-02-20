@@ -19,9 +19,9 @@ class Board {
     byte[] cols() {
         byte[] cols = new byte[size];
         Arrays.fill(cols, (byte) -1);
-        for(byte i = 0; i < size; i++){
+        for (byte i = 0; i < size; i++) {
             byte j = board[i];
-            if(j == -1)
+            if (j == -1)
                 continue;
             cols[j] = i;
         }

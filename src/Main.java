@@ -32,7 +32,8 @@ class Main {
         try {
             String answer = JOptionPane.showInputDialog(null, "What is the dimension?", Integer.toString(N));
             N = Integer.parseInt(answer);
-        } catch (Throwable throwable) {}
+        } catch (Throwable throwable) {
+        }
 
         jTextArea.append(format("Dimension set to %d.\n\n", N));
 
@@ -70,7 +71,7 @@ class Main {
 
             int nonEu = Euler.get(layers, sort);
             jTextArea.append("6/6. non-eulerity is " + nonEu + " \n");
-        }catch (Throwable error){
+        } catch (Throwable error) {
             error.printStackTrace(System.out);
             jTextArea.append("Report may be corrupted!!\n");
         }
@@ -84,7 +85,7 @@ class Main {
         jTextArea.append(format("Time spent: %.3f sec \n", time / 1000.0d));
 
 
-        if(toReport.length() > 0){
+        if (toReport.length() > 0) {
             jTextArea.append(format("\nAdditional info:"));
             jTextArea.append(toReport.toString());
         }
@@ -92,7 +93,7 @@ class Main {
         jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    private static void printPrompt(JTextArea jTextArea){
+    private static void printPrompt(JTextArea jTextArea) {
         jTextArea.setEditable(false);
         jTextArea.setLineWrap(true);
         jTextArea.append("Theoretically, boards may not display properly due to technical reasons.\n");
