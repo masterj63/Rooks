@@ -186,8 +186,9 @@ public class ClassificationChecker {
         return res;
     }
 
-    private Board getDInterchange(int ind, int i, int j, int a, int b) {
-        throw new UnsupportedOperationException();
+    private Board getDInterchange(int ind, byte i, byte j, byte a, byte b) {
+        Board board = boards[ind];
+        return board.remove(i).remove(a).add(i, b).add(a, j);
     }
 
     private List<BytePair> getC(int ind, int i, int j) {
