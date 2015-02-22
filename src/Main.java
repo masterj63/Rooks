@@ -48,29 +48,32 @@ class Main {
             Calendar cal = Calendar.getInstance();
             String timeStamp = dateFormat.format(cal.getTime());
 
-            jTextArea.append(format("0/6. started at %s.\n", timeStamp));
+            jTextArea.append(format("0/7. started at %s.\n", timeStamp));
 
             List<byte[]> boardsList = ListPositionByN.get();
-            jTextArea.append("1/6. positions computed.\n");
+            jTextArea.append("1/7. positions computed.\n");
             boardsListSize = boardsList.size();
 
             byte[][][] matrices = MatricesByListPosition.get(boardsList);
-            jTextArea.append("2/6. boards computed.\n");
+            jTextArea.append("2/7. boards computed.\n");
 
             List<Integer>[] sort = Sorter.sort(matrices);
-            jTextArea.append("3/6. matrices sorted.\n");
+            jTextArea.append("3/7. matrices sorted.\n");
+
+            boolean bool = ClassificationChecker.check(boardsList, sort);
+            jTextArea.append("4/7. classification checked: " + bool + ".\n");
 
             List<List<Integer>> layers = LayersBySort.get(sort);
-            jTextArea.append("4/6. layers computed.\n");
+            jTextArea.append("5/7. layers computed.\n");
             for (List<Integer> t : layers)
                 maxLayerSize = Math.max(maxLayerSize, t.size());
             layersNum = layers.size();
 
             Canvas.draw(layers, sort, boardsList, matrices);
-            jTextArea.append("5/6. i'm done.\n");
+            jTextArea.append("6/7. i'm done.\n");
 
             int nonEu = Euler.get(layers, sort);
-            jTextArea.append("6/6. non-eulerity is " + nonEu + " \n");
+            jTextArea.append("7/7. non-eulerity is " + nonEu + " \n");
         } catch (Throwable error) {
             error.printStackTrace(System.out);
             jTextArea.append("Report may be corrupted!!\n");
