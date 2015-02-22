@@ -41,7 +41,7 @@ class ClassificationChecker {
 
     private boolean check(int ind) {
         Set<Integer> L = getL(ind);
-        Set<Integer> N = getL(ind);
+        Set<Integer> N = getN(ind);
         boolean b = L.equals(N);
         return b;
     }
