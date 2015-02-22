@@ -30,7 +30,7 @@ class Board {
 
     Board remove(int i) {
         if (board[i] == -1)
-            return this;
+            throw new IllegalArgumentException();
 
         byte[] b = board.clone();
         b[i] = -1;
