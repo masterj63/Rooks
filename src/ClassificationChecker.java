@@ -192,7 +192,29 @@ public class ClassificationChecker {
     }
 
     private Set<Integer> getNZero(int ind) {
-        throw new UnsupportedOperationException();
+        Board board = boards[ind];
+        Set<Integer> res = new HashSet<>();
+
+        for (byte i = 0; i < board.size; i++) {
+            byte j = board.get(i);
+            if (j == -1)
+                continue;
+
+            Board boardRight = getDRight(ind, i);
+            res.add(boardIndMap.get(boardRight));
+
+            Board boardUp = getDUp(ind, i);
+            res.add(boardIndMap.get(boardUp));
+
+            List<BytePair> bs = getB(ind, i, j);
+            for (BytePair bp : bs) {
+                byte a = bp.b0, b = bp.b1;
+                Board boardInt = getDInterchange(ind, i, j, a, b);
+                res.add(boardIndMap.get(boardInt));
+            }
+        }
+
+        return res;
     }
 
     private List<BytePair> getC(int ind, int i, int j) {
