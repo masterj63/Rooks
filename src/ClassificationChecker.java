@@ -162,8 +162,8 @@ public class ClassificationChecker {
         return b.remove(i).add(m, j);
     }
 
-    private List<byte[]> getB(int ind, int i, int j) {
-        List<byte[]> res = new ArrayList<>();
+    private List<BytePair> getB(int ind, int i, int j) {
+        List<BytePair> res = new ArrayList<>();
         Board board = boards[ind];
 
         f:
@@ -180,7 +180,7 @@ public class ClassificationChecker {
                 if (rookIsGreater(a, b, p, q) && rookIsGreater(p, q, i, j))
                     continue f;
             }
-            res.add(new byte[]{(byte) a, (byte) b});
+            res.add(new BytePair(a, b));
         }
 
         return res;
@@ -190,7 +190,7 @@ public class ClassificationChecker {
         throw new UnsupportedOperationException();
     }
 
-    private List<byte[]> getC(int ind, int i, int j) {
+    private List<BytePair> getC(int ind, int i, int j) {
         throw new UnsupportedOperationException();
     }
 
@@ -218,5 +218,14 @@ public class ClassificationChecker {
         res.addAll(nPlus);
 
         return res;
+    }
+
+    private class BytePair {
+        final byte b0, b1;
+
+        public BytePair(int b0, int b1) {
+            this.b0 = (byte) b0;
+            this.b1 = (byte) b1;
+        }
     }
 }
