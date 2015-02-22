@@ -133,8 +133,8 @@ class ClassificationChecker {
                 continue;
             if (rookIsGreater(i, j, p, q) && !rookIsGreater(i, m, p, q))
                 return null;
-            for(int k = 1 + j; k <= m; k++)
-                if(b.get(k) == -1)
+            for (int k = 1 + j; k <= m; k++)
+                if (b.get(k) == -1)
                     return null;
         }
 
@@ -257,7 +257,7 @@ class ClassificationChecker {
                 }
                 if (!ok)
                     continue f;
-                if(a == b || a != b && board.get(b) != -1 && cols[a] != -1)
+                if (a == b || a != b && board.get(b) != -1 && cols[a] != -1)
                     res.add(new BytePair(a, b));
             }
 
