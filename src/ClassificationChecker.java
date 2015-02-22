@@ -227,7 +227,23 @@ public class ClassificationChecker {
     }
 
     private Set<Integer> getNPlus(int ind) {
-        throw new UnsupportedOperationException();
+        Board board = boards[ind];
+        Set<Integer> res = new HashSet<>();
+
+        for (byte i = 0; i < board.size; i++) {
+            byte j = board.get(i);
+            if (j == -1)
+                continue;
+            List<BytePair> cs = getC(ind, i, j);
+            for (BytePair bp : cs) {
+                byte a = bp.b0, b = bp.b1;
+                Board boardSplit = getDSplitting(ind, i, j, a, b);
+                int t = boardIndMap.get(boardSplit);
+                res.add(t);
+            }
+        }
+
+        return res;
     }
 
     private Set<Integer> getN(int ind) {
