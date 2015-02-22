@@ -186,7 +186,19 @@ public class ClassificationChecker {
         return res;
     }
 
+    private Board getDInterchange(int ind, int i, int j, int a, int b) {
+        throw new UnsupportedOperationException();
+    }
+
+    private List<byte[]> getC(int ind, int i, int j) {
+        throw new UnsupportedOperationException();
+    }
+
     private Set<Integer> getNZero(int ind) {
+        throw new UnsupportedOperationException();
+    }
+
+    private Board getDSplitting(int ind, int i, int j, int a, int b) {
         throw new UnsupportedOperationException();
     }
 
