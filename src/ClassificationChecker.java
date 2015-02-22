@@ -120,8 +120,9 @@ class ClassificationChecker {
             throw new IllegalArgumentException();
 
         int m = -1;
+        byte[] cols = b.cols();
         for (int k = 1 + j; k < i; k++)
-            if (b.get(k) == -1) {
+            if (cols[k] == -1) {
                 m = k;
                 break;
             }
