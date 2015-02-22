@@ -210,7 +210,8 @@ public class ClassificationChecker {
             for (BytePair bp : bs) {
                 byte a = bp.b0, b = bp.b1;
                 Board boardInt = getDInterchange(ind, i, j, a, b);
-                res.add(boardIndMap.get(boardInt));
+                int t = boardIndMap.get(boardInt);
+                res.add(t);
             }
         }
 
