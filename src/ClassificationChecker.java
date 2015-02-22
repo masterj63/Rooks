@@ -218,8 +218,38 @@ public class ClassificationChecker {
         return res;
     }
 
-    private List<BytePair> getC(int ind, int i, int j) {
-        throw new UnsupportedOperationException();
+    private List<BytePair> getC(int ind, byte i, byte j) {
+        Board board = boards[ind];
+        List<BytePair> res = new ArrayList<>();
+
+        for (byte a = (byte) (1 + j); a < i; a++)
+            f:for (byte b = a; b < i; b++) {
+                byte[] cols = board.cols();
+                if (board.get(a) != -1 || cols[b] != -1)
+                    continue;
+                for (byte k = (byte) (1 + a); k < b; k++)
+                    if (board.get(k) == -1 || cols[k] == -1)
+                        continue f;
+
+                boolean ok = true;//p. 15/945
+                for (byte p = 0; p < board.size; p++) {
+                    byte q = board.get(p);
+                    if (q == -1)
+                        continue;
+                    if (!rookIsGreater(i, j, p, q))
+                        continue;
+                    if (rookIsGreater(a, j, p, q))
+                        continue;
+                    if (!rookIsGreater(i, b, p, q))
+                        ok = false;
+                }
+                if (!ok)
+                    continue f;
+                if(a == b || a != b && board.get(b) != -1 && cols[a] != -1)
+                    res.add(new BytePair(a, b));
+            }
+
+        return res;
     }
 
     private Board getDSplitting(int ind, byte i, byte j, byte a, byte b) {
