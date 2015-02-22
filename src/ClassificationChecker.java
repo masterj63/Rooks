@@ -163,6 +163,10 @@ class ClassificationChecker {
                 continue;
             if (rookIsGreater(i, j, p, q) && !rookIsGreater(m, j, p, q))
                 return null;
+            byte[] cols = b.cols();
+            for (int k = m; k <= i - 1; k++)
+                if (cols[k] == -1)
+                    return null;
         }
 
         return b.remove(i).add(m, j);
