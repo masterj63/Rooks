@@ -2,7 +2,7 @@ import java.util.*;
 
 import static java.util.Arrays.fill;
 
-public class ClassificationChecker {
+class ClassificationChecker {
     private final Board[] boards;
     private final Set<Integer>[] invSort;
     private final Map<Board, Integer> boardIndMap;
@@ -40,7 +40,10 @@ public class ClassificationChecker {
     }
 
     private boolean check(int ind) {
-        return getL(ind).equals(getN(ind));
+        Set<Integer> L = getL(ind);
+        Set<Integer> N = getL(ind);
+        boolean b = L.equals(N);
+        return b;
     }
 
     private Set<Integer> getL(int ind) {
