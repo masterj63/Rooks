@@ -7,11 +7,6 @@ public class ClassificationChecker {
     private final Set<Integer>[] invSort;
     private final Map<Board, Integer> boardIndMap;
 
-    static boolean check(List<byte[]> boardsList, List<Integer>[] sort) {
-        ClassificationChecker checker = new ClassificationChecker(boardsList, sort);
-        return checker.check();
-    }
-
     private ClassificationChecker(List<byte[]> boardsList, List<Integer>[] sort) {
         final int n = boardsList.size();
 
@@ -24,6 +19,15 @@ public class ClassificationChecker {
         boardIndMap = new HashMap<>();
         for (int i = 0; i < n; i++)
             boardIndMap.put(boards[i], i);
+    }
+
+    static boolean check(List<byte[]> boardsList, List<Integer>[] sort) {
+        ClassificationChecker checker = new ClassificationChecker(boardsList, sort);
+        return checker.check();
+    }
+
+    private static boolean rookIsGreater(int a, int b, int c, int d) {
+        return a > c && b < d;
     }
 
     private boolean check() {
@@ -43,34 +47,26 @@ public class ClassificationChecker {
         return invSort[ind];
     }
 
-    private Set<Integer> getN(int ind) {
-        Set<Integer> res = new HashSet<>();
-
-        Set<Integer> nMinus = getNMinus(ind);
-        Set<Integer> nZero = getNZero(ind);
-        Set<Integer> nPlus = getNPlus(ind);
-
-        res.addAll(nMinus);
-        res.addAll(nZero);
-        res.addAll(nPlus);
-
-        return res;
-    }
-
-    private Set<Integer> getNMinus(int ind) {
-        Set<Integer> set = new HashSet<>();
-        Board M = getM(ind);
-
-        for (int i = 0; i < M.size; i++) {
-            byte j = M.get(i);
+    private Board getMWave(int ind) {
+        Board board = boards[ind];
+        final int n = board.size;
+        byte[] b = new byte[n];
+        fill(b, (byte) -1);
+        f:
+        for (int i = 0; i < n; i++) {
+            byte j = board.get(i);
             if (j == -1)
                 continue;
-            Board b = M.remove(i);
-            Integer t = boardIndMap.get(b);
-            set.add(t);
+            for (int p = 0; p < n; p++) {
+                byte q = board.get(p);
+                if (q == -1)
+                    continue;
+                if (i > p && j < q)
+                    continue f;
+            }
+            b[i] = j;
         }
-
-        return set;
+        return new Board(b);
     }
 
     private Board getM(int ind) {
@@ -96,26 +92,20 @@ public class ClassificationChecker {
         return new Board(res);
     }
 
-    private Board getMWave(int ind) {
-        Board board = boards[ind];
-        final int n = board.size;
-        byte[] b = new byte[n];
-        fill(b, (byte) -1);
-        f:
-        for (int i = 0; i < n; i++) {
-            byte j = board.get(i);
+    private Set<Integer> getNMinus(int ind) {
+        Set<Integer> set = new HashSet<>();
+        Board M = getM(ind);
+
+        for (int i = 0; i < M.size; i++) {
+            byte j = M.get(i);
             if (j == -1)
                 continue;
-            for (int p = 0; p < n; p++) {
-                byte q = board.get(p);
-                if (q == -1)
-                    continue;
-                if (i > p && j < q)
-                    continue f;
-            }
-            b[i] = j;
+            Board b = M.remove(i);
+            Integer t = boardIndMap.get(b);
+            set.add(t);
         }
-        return new Board(b);
+
+        return set;
     }
 
     private Board getDRight(int ind, int i) {
@@ -204,7 +194,17 @@ public class ClassificationChecker {
         throw new UnsupportedOperationException();
     }
 
-    private static boolean rookIsGreater(int a, int b, int c, int d) {
-        return a > c && b < d;
+    private Set<Integer> getN(int ind) {
+        Set<Integer> res = new HashSet<>();
+
+        Set<Integer> nMinus = getNMinus(ind);
+        Set<Integer> nZero = getNZero(ind);
+        Set<Integer> nPlus = getNPlus(ind);
+
+        res.addAll(nMinus);
+        res.addAll(nZero);
+        res.addAll(nPlus);
+
+        return res;
     }
 }
