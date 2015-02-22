@@ -191,11 +191,11 @@ public class ClassificationChecker {
         return board.remove(i).remove(a).add(i, b).add(a, j);
     }
 
-    private List<BytePair> getC(int ind, int i, int j) {
+    private Set<Integer> getNZero(int ind) {
         throw new UnsupportedOperationException();
     }
 
-    private Set<Integer> getNZero(int ind) {
+    private List<BytePair> getC(int ind, int i, int j) {
         throw new UnsupportedOperationException();
     }
 
