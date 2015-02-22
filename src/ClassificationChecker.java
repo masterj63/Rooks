@@ -97,13 +97,14 @@ class ClassificationChecker {
 
     private Set<Integer> getNMinus(int ind) {
         Set<Integer> set = new HashSet<>();
+        Board board = boards[ind];
         Board M = getM(ind);
 
         for (int i = 0; i < M.size; i++) {
             byte j = M.get(i);
             if (j == -1)
                 continue;
-            Board b = M.remove(i);
+            Board b = board.remove(i);
             Integer t = boardIndMap.get(b);
             set.add(t);
         }
