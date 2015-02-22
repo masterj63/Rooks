@@ -211,10 +211,12 @@ class ClassificationChecker {
                 continue;
 
             Board boardRight = getDRight(ind, i);
-            res.add(boardIndMap.get(boardRight));
+            if (boardRight != null)
+                res.add(boardIndMap.get(boardRight));
 
             Board boardUp = getDUp(ind, i);
-            res.add(boardIndMap.get(boardUp));
+            if (boardUp != null)
+                res.add(boardIndMap.get(boardUp));
 
             List<BytePair> bs = getB(ind, i, j);
             for (BytePair bp : bs) {
