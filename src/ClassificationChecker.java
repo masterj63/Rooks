@@ -222,8 +222,9 @@ public class ClassificationChecker {
         throw new UnsupportedOperationException();
     }
 
-    private Board getDSplitting(int ind, int i, int j, int a, int b) {
-        throw new UnsupportedOperationException();
+    private Board getDSplitting(int ind, byte i, byte j, byte a, byte b) {
+        Board board = boards[ind];
+        return board.remove(i).add(i, b).add(a, j);
     }
 
     private Set<Integer> getNPlus(int ind) {
